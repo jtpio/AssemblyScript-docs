@@ -241,11 +241,12 @@ Likewise, these represent the [WebAssembly SIMD](https://github.com/WebAssembly/
 
 * v128.**any\_true**&lt;`T`&gt;\(a: `v128`\): `bool` Reduces a vector to a scalar indicating whether any lane is considered `true`.
 * v128.**all\_true**&lt;`T`&gt;\(a: `v128`\): `bool` Reduces a vector to a scalar indicating whether all lanes are considered `true`.
+* v128.**bitmask**&lt;`T`&gt;\(a: `v128`\): `bool` _integer only, except 64-bit_ Extracts the high bit of each lane and produces a scalar mask with all bits concatenated.
 * v128.**max**&lt;`T`&gt;\(a: `v128`, b: `v128`\): `v128` Computes the maximum of each lane.
 * v128.**min**&lt;`T`&gt;\(a: `v128`, b: `v128`\): `v128` Computes the minimum of each lane.
 * v128.**dot**&lt;`T`&gt;\(a: `v128`, b: `v128`\): `v128` _i16 only_ Computes the dot product of two lanes each, yielding lanes one size wider than the input.
 * v128.**avgr**&lt;`T`&gt;\(a: `v128`, b: `v128`\): `v128`\) _u8/u16 only_ Computes the rounding average of each lane.
-* v128.**abs**&lt;`T`&gt;\(a: `v128`\): `v128` _float only_ Computes the absolute value of each lane.
+* v128.**abs**&lt;`T`&gt;\(a: `v128`\): `v128` _except 64-bit integers_ Computes the absolute value of each lane.
 * v128.**sqrt**&lt;`T`&gt;\(a: `v128`\): `v128` _float only_ Computes the square root of each lane.
 * v128.**eq**&lt;`T`&gt;\(a: `v128`, b: `v128`\): `v128` Computes which lanes are equal.
 * v128.**ne**&lt;`T`&gt;\(a: `v128`, b: `v128`\): `v128` Computes which lanes are not equal.
