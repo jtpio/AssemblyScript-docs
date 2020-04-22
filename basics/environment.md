@@ -135,6 +135,9 @@ Similarly, the following built-ins emit WebAssembly instructions accessing or ot
   - **Positive** value if the first differing byte in `lhs` is greater than the corresponding byte in `rhs`.  
   - **Zero​** if all `n` bytes of `lhs` and `rhs` are equal.
 
+* **memory.data**\(size: `i32`, align?: `i32`\): `usize` Gets a pointer to a zeroed static chunk of memory of the given size. Alignment defaults to `16`. Arguments must be compile-time constants.
+* **memory.data**&lt;`T`&gt;\(values: `T[]`, align?: `i32`\): `usize` Gets a pointer to a pre-initialized static chunk of memory. Alignment defaults to the size of `T`. Arguments must be compile-time constants.
+
 The `immOffset` argument is a bit special here, because it becomes an actual immediate of the respective WebAssembly instruction instead of a normal operand. Thus it must be provided as a compile time constant value. This can be a literal or the value of a `const` variable that the compiler can precompute.
 
 ### **Memory Utility**
