@@ -11,18 +11,30 @@ Layout of objects in memory resembles that of non-packed C structs, and `@unmana
 ```cpp
 struct Foo {
   uint32_t bar;
+  uint16_t baz;
+  uint64_t qux;
 }
 ```
 
 ```typescript
 @unmanaged class Foo {
-  bar: u32
+  bar: u32; // aligned to 4 bytes
+  baz: u16; // aligned to 2 bytes
+  qux: u64; // aligned to 8 bytes
 }
 
+offsetof<Foo>("bar") == 0
+offsetof<Foo>("baz") == 4
+offsetof<Foo>("qux") == 8
+offsetof<Foo>() == 16
+
 var foo = changetype<Foo>(ptrToFoo)
+foo.bar // -> i32.load(ptrToFoo, 0)
+foo.baz // -> i32.load16_u(ptrToFoo, 4)
+foo.qux // -> i64.load(ptrToFoo, 8)
 ```
 
-More complex structures usually require manual offset calculation, though, mostly for the reason that it is not feasible to implement something more specific into AssemblyScript as it does not use such structures on its own:
+More complex structures usually require manual offset calculation, mostly for the reason that it is not feasible to implement something more specific into AssemblyScript as it does not use such structures on its own:
 
 ```cpp
 struct Foo {
@@ -37,7 +49,7 @@ struct Foo {
   getBaz(i: i32): u32 {
     return load<u32>(
       changetype<usize>(this) + (<usize>i << alignof<u32>()),
-      4 // or use offsetof, sizeof etc. to calculate the base offset incl. alignment
+      4 // or use offsetof/sizeof to calculate the base offset plus alignment
     )
   }
 }
