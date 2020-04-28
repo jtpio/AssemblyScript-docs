@@ -7,7 +7,6 @@
   * [Environment](basics/environment.md)
   * [Exports and imports](basics/exports-and-imports.md)
   * [Loader](basics/loader.md)
-  * [Limitations](basics/limitations.md)
 * [The Details](details/README.md)
   * [Compiler](details/compiler.md)
   * [Memory](details/memory.md)

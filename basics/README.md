@@ -80,25 +80,62 @@ Currently, values WebAssembly can exchange out of the box are **limited to basic
 
 For now, there is [the loader](loader.md) that provides the utility necessary to exchange strings and arrays for example, but it is somewhat edgy on its own due to its garbage collection primitives. It's a great starting point however for learning more about how the higher level structures _actually_ work.
 
-In the near to distant future, the [reference types](https://github.com/WebAssembly/reference-types) 🦄, [interface types](https://github.com/WebAssembly/interface-types) 🦄 and ultimately [GC](https://github.com/WebAssembly/gc) 🦄 proposals will make much of this a lot easier and will allow us to implement [currently limited language features](limitations.md) more easily.
+In the near to distant future, the [reference types](https://github.com/WebAssembly/reference-types) 🦄, [interface types](https://github.com/WebAssembly/interface-types) 🦄 and ultimately [GC](https://github.com/WebAssembly/gc) 🦄 proposals will make much of this a lot easier.
 
-## Diverging semantics
+## Current limitations
 
-Overall, there are a few differences that make it **unlikely that existing TypeScript code can be compiled** to WebAssembly without modifications, yet likely that already **reasonably strict TypeScript code can be made compatible** with the AssemblyScript compiler.
+Not all language features are equally straight-forward to implement on top of just the WebAssembly MVP, so there are certain features we are still working on while waiting for their respective proposals to become available.
 
-One prominent and admittedly controversial example of a semantic difference is that `===` performs an identity comparison \(the exact same object\) since part of its special JavaScript semantics \(same value and _same type_\) are irrelevant in a strict type context.
+### Closures
+
+Closures are not yet supported \(waiting for [Function References](https://github.com/WebAssembly/function-references) 🦄 / [GC](https://github.com/WebAssembly/gc) 🦄\), so accessing a local variable captured by an inner function will report an error.
 
 ```typescript
-var s1 = "1"
-var s2 = "123".substring(0, 1)
-s1 === s1 // true
-s1 === s2 // false
-s2 === s2 // true
-s1 === 1 // compile error
-s1 == s2 // true
+function computeSum(arr: i32[]): i32 {
+  var sum = 0
+  arr.forEach(value => {
+    sum += value // error
+  })
+  return sum
+}
 ```
 
-For all other types than `string` and operator-overloaded objects with a `==` overload, `===` is equivalent to `==`. This is likely to change once we figure out a better alternative.
+In the meantime we recommend to either use a global \(top-level variable\)
+
+```typescript
+var sum = 0 // now becomes a Global
+function computeSum(arr: i32[]): i32 {
+  arr.forEach(value => {
+    sum += value // works
+  })
+  return sum
+}
+```
+
+or to adapt code where possible:
+
+```typescript
+let sum = 0
+for (let i = 0; i < arr.length; ++i) {
+  sum += arr[i] // works
+}
+```
+
+### Exceptions
+
+Exceptions are not yet supported \(waiting for [Exception Handling](https://github.com/WebAssembly/exception-handling) 🦄\), so the following cannot be caught and will instead `abort` \(i.e. crash\) the program:
+
+```typescript
+function doThrow(): void {
+  throw new Error("message")
+}
+```
+
+In the meantime we recommend to avoid the use of `try`, `catch`, `finally` and `throw` and do as they did in the olden days, i.e. return an error code or `null` to indicate.
+
+### Triple equals \(===\)
+
+The triple equals binary operation performs an identity equality check \(i.e. the exact same object\) currently. This has its origins in the early requirements of the Standard Library, but is going to change to JavaScript-like semantics in the near future. In the meantime, use `==` and `!=` with strings in case of doubt.
 
 ## Frequently asked questions
 
