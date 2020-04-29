@@ -16,7 +16,7 @@ To get started with AssemblyScript, switch to a new directory and set up a new n
 $> npm init
 ```
 
-Now install both the [loader](basics/loader.md) and the [compiler](details/compiler.md) using npm. Let's assume that that compiler is not required in production and make it a development dependency:
+Now install both the [loader](basics/loader.md) and the [compiler](details/compiler.md) using npm. Let's assume that the compiler is not required in production and make it a development dependency:
 
 ```bash
 $> npm install @assemblyscript/loader
