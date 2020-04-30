@@ -10,30 +10,30 @@ The following assumes that a [recent version of Node.js](https://nodejs.org) and
 
 ## Setting up a new project
 
-To get started with AssemblyScript, switch to a new directory and set up a new node module:
+To get started with AssemblyScript, switch to a new directory and initialize a new node module:
 
-```text
-$> npm init
+```bash
+npm init
 ```
 
 Now install both the [loader](basics/loader.md) and the [compiler](details/compiler.md) using npm. Let's assume that the compiler is not required in production and make it a development dependency:
 
 ```bash
-$> npm install @assemblyscript/loader
-$> npm install --save-dev assemblyscript
+npm install @assemblyscript/loader
+npm install --save-dev assemblyscript
 ```
 
 {% hint style="info" %}
 If you need a [specific version](https://github.com/AssemblyScript/assemblyscript/releases) of the loader and/or the compiler, append the respective version number as usual. The latest nightly version \(note the `--save-exact`\) can be obtained via
 
-`npm install --save-exact @assemblyscript/loader  
+`npm install --save-exact @assemblyscript/loader@nightly  
 npm install --save-dev --save-exact assemblyscript@nightly`
 {% endhint %}
 
-Once installed, the compiler provides a handy scaffolding utility to quickly set up a new AssemblyScript project, for example in the current directory:
+Once installed, the compiler provides a handy scaffolding utility to quickly set up a new AssemblyScript project, for example in the directory of the just initialized node module:
 
 ```bash
-$> npx asinit .
+npx asinit .
 ```
 
 It automatically creates the recommended directory structure and configuration files, including:
@@ -44,8 +44,8 @@ It automatically creates the recommended directory structure and configuration f
 
 Once initialized, edit the sources in `assembly/`, maybe tweak the build steps in `package.json` to fit your needs, and run the build command to compile your module to WebAssembly:
 
-```text
-$> npm run asbuild
+```bash
+npm run asbuild
 ```
 
 ## Next steps
