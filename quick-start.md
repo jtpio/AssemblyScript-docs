@@ -19,14 +19,14 @@ npm init
 Now install both the [loader](basics/loader.md) and the [compiler](details/compiler.md) using npm. Let's assume that the compiler is not required in production and make it a development dependency:
 
 ```bash
-npm install @assemblyscript/loader
+npm install --save @assemblyscript/loader
 npm install --save-dev assemblyscript
 ```
 
 {% hint style="info" %}
 If you need a [specific version](https://github.com/AssemblyScript/assemblyscript/releases) of the loader and/or the compiler, append the respective version number as usual. The latest nightly version \(note the `--save-exact`\) can be obtained via
 
-`npm install --save-exact @assemblyscript/loader@nightly  
+`npm install --save --save-exact @assemblyscript/loader@nightly  
 npm install --save-dev --save-exact assemblyscript@nightly`
 {% endhint %}
 
