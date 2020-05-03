@@ -16,6 +16,7 @@
   * [Debugging](details/debugging.md)
   * [Interoperability](details/interoperability.md)
   * [Development](details/development.md)
+  * [Transforms](details/transforms.md)
 * [Examples](examples.md)
 * [Frequently asked questions](faq.md)
 

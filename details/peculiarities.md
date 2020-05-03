@@ -211,12 +211,3 @@ if (ASC_FEATURE_SIMD) {
 }
 ```
 
-## Transforms
-
-The compiler frontend \(asc\) provides hooking into the compilation process by means of transforms. Specifying `--transform myTransform` on the command line will load the node module pointed to by `myTransform` and the compiler will call the following hooks during the compilation process:
-
-* **afterParse**\(parser: `Parser`\): `void` Called with the parsing result of all relevant files once parsing is complete. Useful to modify the AST before it becomes compiled, for example by looking for custom decorators and injecting actual logic.
-* **afterCompile**\(module: `Module`\): `void` Called with the resulting Binaryen module before it is being emitted. Useful to modify the IR before it becomes emitted, for example to replace imports with actual functionality or to add custom sections.
-
-Also see the [transform examples](https://github.com/AssemblyScript/assemblyscript/tree/master/examples/transform). The set of hooks is intentionally minimal at this point. If you need something special, please let us know about your use case.
-
