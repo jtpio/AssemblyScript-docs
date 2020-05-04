@@ -18,6 +18,7 @@
   * [Development](details/development.md)
   * [Transforms](details/transforms.md)
 * [Frequently asked questions](faq.md)
+* [Examples](https://github.com/AssemblyScript/examples)
 
 ## Standard library
 
@@ -48,7 +49,6 @@
 
 ## Resources
 
-* [Examples](https://github.com/AssemblyScript/examples)
 * [Status and Roadmap](https://github.com/AssemblyScript/assemblyscript/wiki/Status-and-Roadmap)
 * [Contributing guidelines](https://github.com/AssemblyScript/assemblyscript/blob/master/CONTRIBUTING.md)
 * [WebAssembly Documentation](https://webassembly.org/docs/high-level-goals/)
