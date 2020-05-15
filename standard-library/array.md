@@ -39,6 +39,7 @@ arr[0]; // now it works 😊
 * Array\#**fill**\(value: `T`, start?: `i32`, end?: `i32`\): `this` Replaces the values of the array from `start` inclusive to `end` exclusive in place with the specified value, returning the array.
 * Array\#**filter**\(fn: `(value: T, index: i32, array: Array<T>) => bool`\): `Array<T>` Calls the specified function with every value of the array, returning a new array with all values for which the function returned `true`.
 * Array\#**findIndex**\(fn: `(value: T, index: i32, array: Array<T>) => bool`\): `i32` Calls the specified function with every value of the array until it finds the first value for which the function returns `true`, returning its index. Returns `-1` if that's never the case.
+* Array\#**flat**\(\): `valueof<T>[]` Flattens an array of arrays to a one-dimensional array. `null` entries are ignored.
 * Array\#**forEach**\(fn: `(value: T, index: i32, array: Array<T>) => void`\): `void` Calls the specified function with every value of the array.
 * Array\#**includes**\(value: `T`, fromIndex?: `i32`\): `bool` Tests if the array includes the specified value, optionally providing a starting index.
 * Array\#**indexOf**\(value: `T`, fromIndex?: `i32`\): `i32` Gets the first index where the specified value can be found in the array. Returns `-1` if not found.

@@ -61,7 +61,7 @@ Typical output formats are WebAssembly binary \(.wasm\) and/or text format \(.wa
 There are several other output formats as well for tooling purposes with varying levels of maturity.
 
 ```text
---asmjsFile, -a       Specifies the asm.js output file (.js).
+--jsFile, -j          Specifies the JavaScript output file (.js).
 --idlFile, -i         Specifies the WebIDL output file (.webidl).
 --tsdFile, -d         Specifies the TypeScript definition output file (.d.ts).
 ```
@@ -87,7 +87,10 @@ There are several flags that enable or disable specific WebAssembly or compiler 
 
 ```text
 --importMemory        Imports the memory provided as 'env.memory'.
---sharedMemory        Declare memory as shared by settings the max shared memory.
+--noExportMemory      Does not export the memory as 'memory'.
+--initialMemory       Sets the initial memory size in pages.
+--maximumMemory       Sets the maximum memory size in pages.
+--sharedMemory        Declare memory as shared. Requires maximumMemory.
 --importTable         Imports the function table provided as 'env.table'.
 --exportTable         Exports the function table as 'table'.
 --explicitStart       Exports an explicit '_start' function to call.
@@ -106,6 +109,7 @@ There are several flags that enable or disable specific WebAssembly or compiler 
 --use, -u             Aliases a global object under another name, e.g., to switch
                       the default 'Math' implementation used: --use Math=JSMath
                       Can also be used to introduce an integer constant.
+--lowMemoryLimit      Enforces very low (<64k) memory constraints.
 ```
 
 ### Linking
@@ -132,7 +136,6 @@ Other options include those forwarded to Binaryen and various flags useful in ce
 #### Binaryen
 
 ```text
---validate, -c        Validates the module using Binaryen. Exits if invalid.
 --trapMode            Sets the trap mode to use.
 
                        allow  Allow trapping operations. This is the default.
@@ -141,12 +144,15 @@ Other options include those forwarded to Binaryen and various flags useful in ce
 
 --runPasses           Specifies additional Binaryen passes to run after other
                       optimizations, if any. See: Binaryen/src/passes/pass.cpp
+--noValidate          Skips validating the module using Binaryen.
 ```
 
 #### And the kitchen sink
 
 ```text
+--noColors            Disables terminal colors.
 --baseDir             Specifies the base directory of input and output files.
+--extension           Specifies an alternative file extension to use.
 --noUnsafe            Disallows the use of unsafe features in user code.
                       Does not affect library files and external modules.
 --noEmit              Performs compilation as usual but does not emit code.
@@ -159,7 +165,6 @@ Other options include those forwarded to Binaryen and various flags useful in ce
                       package.json and falls back to an inner 'assembly/' folder.
 --traceResolution     Enables tracing of package resolution.
 --listFiles           Lists files to be compiled and exits.
---printrtti           Prints the module's runtime type information to stderr.
 -- ...                Specifies node.js options (CLI only). See: node --help
 ```
 
