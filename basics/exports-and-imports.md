@@ -140,3 +140,23 @@ More complex values than the basic integer and floating point types, like class 
 
 This is true in both directions, hence also applies when providing a value to a WebAssembly import. The most common structures like `String`, `ArrayBuffer` and the typed arrays are documented in [memory internals](../details/memory.md#internals), and custom classes adhere to [class layout](../details/interoperability.md#class-layout).
 
+## Anatomy of a module
+
+WebAssembly modules produced by the AssemblyScript compiler typically have the following set of imports and exports in addition to those defined in user code, with `?` indicating conditional presence. Recommended scenarios like using modules together with the [loader](loader.md) or utilizing WASI via `import "wasi"` take care of these automatically.
+
+### Exports
+
+* **memory**: `WebAssembly.Memory` The module's memory instance. Can be disabled with `--noExportMemory`.
+* **table**?: `WebAssembly.Table` The module's function table instance. Can be enabled with `--exportTable`.
+* **\_start**?: `() => void` Explicit start function to call. Can be enabled with `--explicitStart`. Also works with WASI.
+* **\_\_setArgumentsLength**?: `(numArgs: i32) => void` Varargs helper to set what's known as `arguments.length` in JavaScript. Only present if there is at least one export of a function taking a variable number of arguments. Automatically utilized by the [loader](loader.md).
+* **\_\_alloc**?, **\_\_realloc**?, **\_\_retain**?, **\_\_release**?, **\_\_collect**? [Runtime helpers](../details/runtime.md). Only present on `--runtime stub/full`. Not present on `--runtime none/half`.
+
+### Imports
+
+* env.**memory**?: `WebAssembly.Memory` The module's memory instance. Can be enabled with `--importMemory`.
+* env.**table**?: `WebAssembly.Table` _not present by default_ The module's table instance. Can be enabled with `--importTable`.
+* env.**abort**?\(message: `usize`, fileName: `usize`, line: `u32`, column: `u32`\): `void` Called on unrecoverable errors. Typically present if assertions are enabled. Automatically implemented by the [loader](loader.md). Not present but otherwise implemented on `import "wasi"`.
+* env.**trace**?\(message: `usize`, n: `i32`, a0..4?: `f64`\): `void` Called when `trace` is called in user code. Only present if it is. Automatically implemented by the [loader](loader.md). Not present but otherwise implemented on `import "wasi"`.
+* env.**seed**?\(\): `f64` Called when the random number generator needs to be seeded. Only present if it is. Automatically implemented by the [loader](loader.md). Not present but otherwise implemented on `import "wasi"`.
+
