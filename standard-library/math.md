@@ -14,7 +14,15 @@ Math in AssemblyScript is available in multiple variants.
 | NativeMathf | WebAssembly implementation for `f32` |
 | JSMath | JavaScript Math for `f64` imported from the host |
 
-By default, `NativeMath` is aliased to become the global `Math` object and `NativeMathf` is aliased as `Mathf`, but the implementations can be changed through `--use Math=JSMath` for example. If `JSMath` is used, the host's `Math` object must be imported as `Math`. If `NativeMath` is used, the random number generator must be seeded with `NativeMath.seedRandom(seed: i64)` before the first use of `NativeMath.random()`.
+By default, the global `Math` object is an alias of `NativeMath` and `Mathf` is an alias of `NativeMathf` .
+
+### Using NativeMath
+
+This is the default, so no additional configuration options are required. Note, however, that `Math.random` needs a way to seed the random number generator in this scenario, which WebAssembly alone cannot do, hence a function `env.seed()` is imported from the host \([see also](../basics/exports-and-imports.md#anatomy-of-a-module)\) that must return an `f64` value \(the seed\). The [loader](../basics/loader.md) and `import "WASI"` automatically take care of providing the seed function in this scenario.
+
+### Using JSMath
+
+Where small module size is more important than performance, one can opt to override the default by adding `--use Math=JSMath` on the command line, essentially aliasing `Math` with `JSMath` instead, which maps to an import of the browser's math implementation. Naturally, this option requires importing the browser's `Math` object as a whole, but does not require seeding / is not seedable. The [loader](../basics/loader.md) automatically takes care of importing the browser's math in this scenario.
 
 ## API
 
