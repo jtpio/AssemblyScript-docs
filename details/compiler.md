@@ -123,7 +123,7 @@ Specifying the base offsets of compiler-generated memory respectively the table 
 
 ### API
 
-To integrate with the compiler, for example to post-process the AST, one or multiple custom transforms can be specified.
+To integrate with the compiler, for example to post-process the AST, one or multiple custom [transforms](transforms.md) can be specified.
 
 ```text
 --transform           Specifies the path to a custom transform to 'require'.
@@ -173,5 +173,5 @@ Other options include those forwarded to Binaryen and various flags useful in ce
 The compiler can also be used programmatically.
 
 * [Compiler frontend API](https://github.com/AssemblyScript/assemblyscript/tree/master/cli#api)
-* [Browser SDK](https://github.com/AssemblyScript/assemblyscript/tree/master/lib/sdk) \([example](https://github.com/AssemblyScript/assemblyscript/tree/master/examples/sdk)\)
+* [Browser SDK](https://github.com/AssemblyScript/assemblyscript/tree/master/lib/sdk) \([example](https://github.com/AssemblyScript/examples/tree/master/sdk)\)
 

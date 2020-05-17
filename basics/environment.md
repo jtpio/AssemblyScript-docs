@@ -152,8 +152,6 @@ Sign-agnostic endian conversions \(reverse bytes\).
 
   Reverse only last 2 bytes regardless of the type of argument.
 
-
-
 ### Control flow
 
 * **select**&lt;`T`&gt;\(ifTrue: `T`, ifFalse: `T`, condition: `bool`\): `T` Selects one of two pre-evaluated values depending on the condition. Differs from an `if/else` in that both arms are always executed and the final value is picked based on the condition afterwards. Performs better than an `if/else` only if the condition is random \(means: branch prediction is not going to perform well\) and both alternatives are cheap. It is also worth to note that Binaryen will do relevant optimizations like switching to a `select` automatically, so using a ternary `? :` for example is just fine.
